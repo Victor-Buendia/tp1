@@ -1,21 +1,30 @@
 package completude;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
-class TestCompletude {
+public class TestCompletude {
+	
+	Completude dados;
 
 	@Before
-	void setUp() throws Exception {
+	public void setUp() throws Exception {
+		dados = new Completude();
+		return;
+	}
+	
+	@Test
+	public void test() {
+		dados.criaCampo("teste", true);
+		dados.imprimeCampos();
 	}
 
 	// Calculo da completude de campos OR EXCLUSIVO
 	// Fazer a falsificação, duplicação e triangulação
 	// Finalizar parametrizando os testes
 	@Test
-	void test1() {
+	public void test1() {
 		fail("Calculo da completude de campos OR EXCLUSIVO");
 	}
 	
@@ -23,7 +32,7 @@ class TestCompletude {
 	// Fazer a falsificação, duplicação e triangulação
 	// Finalizar parametrizando os testes
 	@Test
-	void test2() {
+	public void test2() {
 		fail("Calculo da completude de campos OR INCLUSIVO");
 	}
 
@@ -31,14 +40,14 @@ class TestCompletude {
 	// Fazer a falsificação, duplicação e triangulação
 	// Finalizar parametrizando os testes
 	@Test
-	void test3() {
+	public void test3() {
 		fail("Cálculo da completude de registros multi-campos");
 	}
 
 	// Testes de exceção
 	// Não são parametrizados
 	@Test
-	void test4() {
+	public void test4() {
 		fail("Exceção");
 	}
 
