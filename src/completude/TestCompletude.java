@@ -6,18 +6,29 @@ import org.junit.Test;
 
 public class TestCompletude {
 	
-	Completude dados;
+	Completude pessoaFisica;
+	Completude nome;
 
 	@Before
 	public void setUp() throws Exception {
-		dados = new Completude();
+		pessoaFisica = new Completude();
+		nome = new Completude();
 		return;
 	}
 	
 	@Test
 	public void test() {
-		dados.criaCampo("teste", true);
-		dados.imprimeCampos();
+		nome.criaCampo("PrimeiroNome", "Caio");
+		nome.criaCampo("NomeMeio","Cesar");
+		nome.criaCampo("UltimoNome","Oliveira");
+
+		pessoaFisica.criaCampo("CPF",null);
+		pessoaFisica.criaCampo("Matrícula", "2032344532");
+		pessoaFisica.criaCampo("Sexo", "M");
+		pessoaFisica.criaCampo("Email", "Teste@gmail.com");
+		pessoaFisica.criaCampo("Nome", nome);
+		
+		pessoaFisica.imprimeCampos();
 	}
 
 	// Calculo da completude de campos OR EXCLUSIVO
