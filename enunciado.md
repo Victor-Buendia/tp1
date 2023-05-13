@@ -54,7 +54,7 @@ Isso se refere à organização de dados em campos aninhados. Um campo aninhado 
 
 * A regra OU EXCLUSIVO: isso significa que o campo raiz é considerado completo somente quando um e apenas um dos campos filhos está presente. Ou seja, se mais de um campo filho estiver presente, o campo raiz ainda será considerado incompleto.
 * A regra OU INCLUSIVO: isso significa que o campo raiz é considerado preenchido quando pelo menos um campo filho está presente. Isso significa que, se pelo menos um campo filho estiver presente, o campo raiz será considerado completo, mesmo que outros campos filhos estejam faltando.
-* 
+
 O caso especial em que nenhum campo filho está presente é considerado como não-preenchido, ou seja, o campo raiz é considerado incompleto.
 
 Finalmente, para que o campo raiz seja considerado completo, todos os campos filhos devem estar presentes. Ou seja, todos os campos filhos devem ser preenchidos para que o campo raiz seja considerado completo.
