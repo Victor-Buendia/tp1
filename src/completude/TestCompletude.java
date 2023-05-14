@@ -30,7 +30,7 @@ public class TestCompletude {
 		pessoaFisica.criaCampo("Email", "Teste@gmail.com");
 		pessoaFisica.criaCampo("Nome", nome);
 		
-		pessoaFisica.imprimeCampos();
+		// pessoaFisica.imprimeCampos();
 	}
 
 	// Calculo da completude de campos OR EXCLUSIVO
@@ -43,7 +43,7 @@ public class TestCompletude {
 		endereco.criaCampo("Estado", "Distrito Federal");
 		endereco.criaCampo("CEP", null);
 		
-		assertTrue(endereco.checarCompletude(endereco));
+		assertTrue(endereco.checarCompletude());
 	}
 
 	@Test
@@ -53,7 +53,37 @@ public class TestCompletude {
 		endereco.criaCampo("Estado", "Distrito Federal");
 		endereco.criaCampo("CEP", null);
 		
-		assertFalse(endereco.checarCompletude(endereco));
+		assertFalse(endereco.checarCompletude());
+	}
+	
+	@Test
+	public void testOrExclusivoAninhadoVerdadeiro() {
+		nome.criaCampo("PrimeiroNome", null);
+		nome.criaCampo("NomeMeio", null);
+		nome.criaCampo("UltimoNome", null);
+
+		pessoaFisica.criaCampo("CPF", null);
+		pessoaFisica.criaCampo("Matrícula", null);
+		pessoaFisica.criaCampo("Sexo", "M");
+		pessoaFisica.criaCampo("Email", null);
+		pessoaFisica.criaCampo("Nome", nome);
+		
+		assertTrue(pessoaFisica.checarCompletude());
+	}
+	
+	@Test
+	public void testOrExclusivoAninhadoFalso() {
+		nome.criaCampo("PrimeiroNome", "Victor");
+		nome.criaCampo("NomeMeio", null);
+		nome.criaCampo("UltimoNome", null);
+
+		pessoaFisica.criaCampo("CPF", null);
+		pessoaFisica.criaCampo("Matrícula", null);
+		pessoaFisica.criaCampo("Sexo", "M");
+		pessoaFisica.criaCampo("Email", null);
+		pessoaFisica.criaCampo("Nome", nome);
+		
+		assertFalse(pessoaFisica.checarCompletude());
 	}
 	
 	// Calculo da completude de campos OR INCLUSIVO

@@ -13,10 +13,10 @@ public class Completude {
 	}
 	
 	public void imprimeCampos() {
-		imprimeCamposRec(this);
+		imprimeCampos(this);
 	}
 	
-	public void imprimeCamposRec(Completude camposAninhados) {
+	public void imprimeCampos(Completude camposAninhados) {
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
 			
@@ -24,7 +24,7 @@ public class Completude {
 			else if(value instanceof String) System.out.println(entry.getKey() + ": " + entry.getValue());
 			else if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
-				imprimeCamposRec(subcampo);
+				imprimeCampos(subcampo);
 			}
 		}
 	}
@@ -35,15 +35,22 @@ public class Completude {
 	}
 	
 	// método para verificar se um campo composto está completo (recursivo)
+	public boolean checarCompletude() {
+		return checarCompletude(this);
+	}
+	
 	public boolean checarCompletude(Completude camposAninhados) {
 		boolean resultado = false;
 		
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
 			
-			if (!checarCampoAtomico(value)) continue;
-			else if (resultado == false) resultado = true;
-			else return false;
+			if(value instanceof Completude) {
+				Completude subcampo = (Completude) value;
+				resultado = resultado ^ checarCompletude(subcampo);
+			}
+			else 
+				resultado = resultado ^ checarCampoAtomico(value);
 		}
 		
 		return resultado;
