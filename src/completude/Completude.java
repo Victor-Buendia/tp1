@@ -7,6 +7,20 @@ public class Completude {
 	// estrutura para armazenar os dados (estrutura de dados chave - valor, ex: hash)
 	private Map<String, Object> campos = new HashMap<>();
 	
+	public Completude(Object[][] campos) {
+		for(Object[] campo : campos) {
+			String chave = (String) campo[0];
+			Object valor = campo[1];
+			
+			if(valor instanceof Object[][]) {
+				Object[][] subcampo = (Object[][]) valor;
+				Completude campoAninhado = new Completude(subcampo);
+				this.campos.put(chave, campoAninhado);
+			}
+			else this.campos.put(chave, valor);
+		}
+	}
+	
 	// método para adicionar valores aos dados
 	public void criaCampo(String chave, Object valor) {
 		campos.put(chave, valor);
@@ -20,12 +34,13 @@ public class Completude {
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
 			
-			if (value == null) continue;
-			else if(value instanceof String) System.out.println(entry.getKey() + ": " + entry.getValue());
-			else if(value instanceof Completude) {
+			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
+				System.out.println(entry.getKey() + "--------------");
 				imprimeCampos(subcampo);
+				System.out.println("--------------");
 			}
+			else System.out.println(entry.getKey() + ": " + entry.getValue());
 		}
 	}
 	
