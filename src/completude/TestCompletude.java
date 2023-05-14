@@ -45,6 +45,16 @@ public class TestCompletude {
 		
 		assertTrue(endereco.checarCompletude(endereco));
 	}
+
+	@Test
+	public void testOrExclusivoFalso() {
+		endereco.criaCampo("Rua", null);
+		endereco.criaCampo("Cidade", "Brasília");
+		endereco.criaCampo("Estado", "Distrito Federal");
+		endereco.criaCampo("CEP", null);
+		
+		assertFalse(endereco.checarCompletude(endereco));
+	}
 	
 	// Calculo da completude de campos OR INCLUSIVO
 	// Fazer a falsificação, duplicação e triangulação

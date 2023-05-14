@@ -30,10 +30,23 @@ public class Completude {
 	}
 	
     // método para verificar se um campo atômico está completo
+	public boolean checarCampoAtomico(Object campo) {
+		return (campo == null)?false:true;
+	}
 	
 	// método para verificar se um campo composto está completo (recursivo)
 	public boolean checarCompletude(Completude camposAninhados) {
-		return true;
+		boolean resultado = false;
+		
+		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
+			Object value = entry.getValue();
+			
+			if (!checarCampoAtomico(value)) continue;
+			else if (resultado == false) resultado = true;
+			else return false;
+		}
+		
+		return resultado;
 	}
 	
 	// método principal para cálculo da completude (geral)
