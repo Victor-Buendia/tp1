@@ -8,16 +8,18 @@ public class TestCompletude {
 	
 	Completude pessoaFisica;
 	Completude nome;
+	Completude endereco;
 
 	@Before
 	public void setUp() throws Exception {
 		pessoaFisica = new Completude();
 		nome = new Completude();
+		endereco = new Completude();
 		return;
 	}
 	
 	@Test
-	public void test() {
+	public void testCriacaoCampos() {
 		nome.criaCampo("PrimeiroNome", "Caio");
 		nome.criaCampo("NomeMeio","Cesar");
 		nome.criaCampo("UltimoNome","Oliveira");
@@ -35,8 +37,13 @@ public class TestCompletude {
 	// Fazer a falsificação, duplicação e triangulação
 	// Finalizar parametrizando os testes
 	@Test
-	public void test1() {
-		fail("Calculo da completude de campos OR EXCLUSIVO");
+	public void testOrExclusivoVerdadeiro() {
+		endereco.criaCampo("Rua", null);
+		endereco.criaCampo("Cidade", null);
+		endereco.criaCampo("Estado", "Distrito Federal");
+		endereco.criaCampo("CEP", null);
+		
+		assertTrue(endereco.checarCompletude(endereco));
 	}
 	
 	// Calculo da completude de campos OR INCLUSIVO
