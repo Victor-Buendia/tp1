@@ -74,7 +74,7 @@ public class Completude {
 	// método para verificar se um campo é orinclusivo (recursivo)
 	public boolean checarCompletudeOrInclusivo() {
 		
-		return true;
+		return false;
 	}
 	
 	// método principal para cálculo da completude (geral)
