@@ -77,7 +77,13 @@ public class Completude {
 		for (Map.Entry<String, Object> entry : campos.entrySet()) {
 			Object value = entry.getValue();
 
-			if(checarCampoAtomico(value)) {
+			if(value instanceof Completude) {
+				Completude subcampo = (Completude) value;
+				if(subcampo.checarCompletudeOrInclusivo()) {
+					return true;
+				}
+			}
+			else if(checarCampoAtomico(value)) {
 				return true;
 			}
 		}
