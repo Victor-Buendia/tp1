@@ -74,6 +74,14 @@ public class Completude {
 	// método para verificar se um campo é orinclusivo (recursivo)
 	public boolean checarCompletudeOrInclusivo() {
 		
+		for (Map.Entry<String, Object> entry : campos.entrySet()) {
+			Object value = entry.getValue();
+
+			if(checarCampoAtomico(value)) {
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
