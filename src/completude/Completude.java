@@ -93,10 +93,18 @@ public class Completude {
 	
 	// método para cálculo de registro multi-campos
 	public double calcularCompletudeMultiCampos() {
-		return 0.0; 
+		int totalCampos = campos.size();
+		int camposPreenchidos = contarCamposPreenchidos();
+		return (camposPreenchidos / (double) totalCampos) * 100;
 	}
 	
 	private int contarCamposPreenchidos() {
-		return 0; 
+		int camposPreenchidos = 0;
+		for (Object valor : campos.values()) {
+			if (valor != null) {
+				camposPreenchidos++;
+			}
+		}
+		return camposPreenchidos;
 	}
 }
