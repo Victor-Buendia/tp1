@@ -91,5 +91,12 @@ public class Completude {
 		return false;
 	}
 	
-	// método principal para cálculo da completude (geral)
+	// método para cálculo de registro multi-campos
+	public double calcularCompletudeMultiCampos() {
+		return 0.0; 
+	}
+	
+	private int contarCamposPreenchidos() {
+		return 0; 
+	}
 }
