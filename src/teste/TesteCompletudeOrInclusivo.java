@@ -20,21 +20,21 @@ public class TesteCompletudeOrInclusivo {
 	public static Collection<Object[]> data() {
 		return Arrays.asList(new Object[][] {
 			{ new Object[][] {
-					{"PrimeiroNome", "joão"},
+					{"PrimeiroNome", "Nelso"},
 					{"NomeMeio", null},
 					{"UltimoNome", null}
 				}, true },
 			{ new Object[][] {
 					{"CPF", null},
-					{"Matricula", "20/202020"},
-					{"Sexo", "Masculino"},
+					{"Matricula", "23/01234956"},
+					{"Sexo", "M"},
 	                {"Email", null}
 				}, true },
 			{ new Object[][] {
 					{"CPF", "111.111.111-10"},
-					{"Matricula", "20/202020"},
-					{"Sexo", "Masculino"},
-	                {"Email", "aluno@aluno.un.br"}
+					{"Matricula", "23/01234956"},
+					{"Sexo", "M"},
+	                {"Email", "nelsinho@unb.br"}
 				}, true },
 			{ new Object[][] {
 					{"CPF", null},

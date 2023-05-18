@@ -1,84 +1,94 @@
 package teste;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import completude.Completude;
 
+import java.util.Arrays;
+import java.util.Collection;
+
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameters;
+
+
+@RunWith(Parameterized.class)
 public class TesteCompletudeMultiCampos {
-    @Test
-    public void testCompletudeMultiCampos() {
-        Completude completude = new Completude(new Object[][] {
-            {"CPF", null},
-            {"Matricula", null},
-            {"Sexo", null},
-            {"Email", null}
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+            { new Object[][] {
+                {"PrimeiroNome", "Nelso"},
+                {"NomeMeio", null},
+                {"UltimoNome", null}
+            }, true },
+            { new Object[][] {
+                {"CPF", null},
+                {"Matricula", "23/01234956"},
+                {"Sexo", "M"},
+                {"Email", null}
+            }, true },
+            { new Object[][] {
+                {"CPF", "111.111.111-10"},
+                {"Matricula", "23/01234956"},
+                {"Sexo", "M"},
+                {"Email", "nelsinho@unb.br"}
+            }, true },
+            { new Object[][] {
+                {"CPF", null},
+                {"Matricula", null},
+                {"Sexo", null},
+                {"Email", null}
+            }, false },
+            { new Object[][] {
+                {"CPF", null},
+                {"Matrícula", null},
+                {"Sexo", null},
+                {"Email", null},
+                {"Nome", new Object[][] {
+                    {"PrimeiroNome", null},
+                    {"NomeMeio", null},
+                    {"UltimoNome", null}
+                }}
+            }, false },
+            { new Object[][] {
+                {"CPF", null},
+                {"Matrícula", null},
+                {"Sexo", "Masculino"},
+                {"Email", null},
+                {"Nome", new Object[][] {
+                    {"PrimeiroNome", null},
+                    {"NomeMeio", null},
+                    {"UltimoNome", null}
+                }}
+            }, true },
+            { new Object[][] {
+                {"CPF", null},
+                {"Matrícula", null},
+                {"Sexo", null},
+                {"Email", null},
+                {"Nome", new Object[][] {
+                    {"PrimeiroNome", "Ana"},
+                    {"NomeMeio", null},
+                    {"UltimoNome", null}
+                }}
+            }, true }
         });
-
-        double completudeEsperada = 0.0; 
-        double completudeCalculada = completude.calcularCompletudeMultiCampos();
-
-        assertEquals(completudeEsperada, completudeCalculada, 0.01);
     }
-
-    @Test
-    public void testCompletudeMultiCampos_Preenchidos() {
-        Completude completude = new Completude(new Object[][] {
-            {"CPF", "123456789-01"},
-            {"Matricula", "123456789"},
-            {"Sexo", "Masculino"},
-            {"Email", "nelsinho@unb.br"}
-        });
-
-        double completudeEsperada = 100.0;
-        double completudeCalculada = completude.calcularCompletudeMultiCampos();
-
-        assertEquals(completudeEsperada, completudeCalculada, 0.01);
+    
+    private Object[][] dados;
+    private boolean resultadoEsperado;
+    
+    public TesteCompletudeMultiCampos(Object[][] dados, boolean resultadoEsperado) {
+        this.dados = dados;
+        this.resultadoEsperado = resultadoEsperado;
     }
     
     @Test
-    public void testCompletudeMultiCampos_ParcialmentePreenchidos() {
-        Completude completude = new Completude(new Object[][] {
-            {"CPF", "123456789-01"},
-            {"Matrícula", null},
-            {"Sexo", "Masculino"},
-            {"Email", null}
-        });
-    
-        double completudeEsperada = 50.00; 
-        double completudeCalculada = completude.calcularCompletudeMultiCampos();
-    
-        assertEquals(completudeEsperada, completudeCalculada, 0.01);
-    }
-    
-    @Test
-    public void testCompletudeMultiCampos_Vazio() {
-        Completude completude = new Completude(new Object[][] {
-            {"CPF", null},
-            {"Matrícula", null},
-            {"Sexo", null},
-            {"Email", null}
-        });
-    
-        double completudeEsperada = 0.0;
-        double completudeCalculada = completude.calcularCompletudeMultiCampos();
-    
-        assertEquals(completudeEsperada, completudeCalculada, 0.01);
-    }
-    
-    @Test
-    public void testCompletudeMultiCampos_TodosPreenchidos() {
-        Completude completude = new Completude(new Object[][] {
-            {"CPF", "12345678900"},
-            {"Matrícula", "123456789"},
-            {"Sexo", "Masculino"},
-            {"Email", "nelsinho@unb.br"}
-        });
-    
-        double completudeEsperada = 100.0; 
-        double completudeCalculada = completude.calcularCompletudeMultiCampos();
-    
-        assertEquals(completudeEsperada, completudeCalculada, 0.01);
+    public void testCompletudeOrInclusivo() {
+        Completude c = new Completude(dados);
+        assertEquals(resultadoEsperado, c.checarCompletudeOrInclusivo());
     }
 }
