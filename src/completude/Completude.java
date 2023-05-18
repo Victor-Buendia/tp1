@@ -95,7 +95,7 @@ public class Completude {
 	public double calcularCompletudeMultiCampos() {
 		int totalCampos = campos.size();
 		int camposPreenchidos = contarCamposPreenchidos();
-		return (camposPreenchidos / (double) totalCampos) * 100;
+		return ((double) camposPreenchidos / totalCampos) * 100;
 	}
 	
 	private int contarCamposPreenchidos() {
