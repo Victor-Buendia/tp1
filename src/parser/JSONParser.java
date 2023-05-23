@@ -10,6 +10,29 @@ import org.json.JSONArray;
 
 
 public class JSONParser {
+	private static String[] orInclusivo = {"nationality", "birthCountry", "birthCity", "birthState"};
+	private static String[] orExclusivo = {"identifier.lattes", "identifier.orcid"};
+	private static String[] atomicos = {"title", "publicationDate", "language"};
+	
+	public static String classifyFields(String key) {
+		for (String element : orInclusivo) {
+		    if (element.equals(key)) {
+		        return "inclusivo";
+		    }
+		}
+		for (String element : orExclusivo) {
+		    if (element.equals(key)) {
+		        return "exclusivo";
+		    }
+		}
+		for (String element : atomicos) {
+		    if (element.equals(key)) {
+		        return "atomico";
+		    }
+		}
+		return null;
+	}
+	
 	public static String jsonToString(String filePath) {
 		try (FileReader fileReader = new FileReader(filePath)) {
 			StringBuilder contentBuilder = new StringBuilder();
@@ -42,9 +65,10 @@ public class JSONParser {
 		Object[][] campos = new Object[jsonArray.length()][];
             
         for (int i = 0; i < jsonArray.length(); i++) {
-        	Object[] campo = new Object[2];
+        	Object[] campo = new Object[3];
         	campo[0] = Integer.toString(i);
         	campo[1] = (Object[][]) parseJSONObject(jsonArray.getJSONObject(i));
+        	campo[2] = classifyFields((String) campo[0]);
             campos[i] = campo;
         }
 		
@@ -75,9 +99,10 @@ public class JSONParser {
         Object[][] campos = new Object[fields.size()][];
         int j = 0;
         for (Map.Entry<String, Object> entry : fields.entrySet()) {
-            Object[] campo = new Object[2];
+            Object[] campo = new Object[3];
             campo[0] = entry.getKey();
             campo[1] = entry.getValue();
+            campo[2] = classifyFields((String) campo[0]);
             campos[j++] = campo;
         }
         return campos;

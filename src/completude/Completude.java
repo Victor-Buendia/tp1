@@ -6,18 +6,29 @@ import java.util.Map;
 public class Completude {
 	// estrutura para armazenar os dados (estrutura de dados chave - valor, ex: hash)
 	private Map<String, Object> campos = new HashMap<>();
+	private Map<String, Object> tipos = new HashMap<>();
 	
 	public Completude(Object[][] campos) {
 		for(Object[] campo : campos) {
 			String chave = (String) campo[0];
 			Object valor = campo[1];
+			String tipo = (campo.length > 2) ? ((String) campo[2]) : null;
+			// System.out.println(tipo);
 			
 			if(valor instanceof Object[][]) {
 				Object[][] subcampo = (Object[][]) valor;
 				Completude campoAninhado = new Completude(subcampo);
 				this.campos.put(chave, campoAninhado);
+				// System.out.println("EI: " + chave + tipo);
 			}
-			else this.campos.put(chave, valor);
+			else {
+				this.tipos.put(chave, tipo);
+				this.campos.put(chave, valor);
+				// System.out.println(chave+"-"+tipo);
+				// System.out.println("UI: " + chave + tipo);
+				// System.out.println(this.tipos.get(chave));;
+				System.out.println("MINHA CHAVE É: "+ chave + " MEU VALOR É : " + valor + "   MEU TIPO É: "+ tipo);
+			}
 		}
 	}
 	
@@ -28,11 +39,15 @@ public class Completude {
 	
 	public void imprimeCampos() {
 		imprimeCampos(this);
+//		for(Map.Entry<String, Object> entry : this.campos.entrySet()) {
+//			System.out.println(entry.getKey());
+//		}
 	}
 	
 	public void imprimeCampos(Completude camposAninhados) {
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
+			Object key = entry.getKey();
 			
 			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
@@ -40,7 +55,19 @@ public class Completude {
 				imprimeCampos(subcampo);
 				System.out.println("--------------");
 			}
-			else System.out.println(entry.getKey() + ": " + entry.getValue());
+			else {
+//				StringBuilder type = new StringBuilder();
+//				for(Map.Entry<String, Object> element : this.tipos.entrySet()) {
+//					if(element.getKey().equals(key)) {
+//						type = (StringBuilder) element.getValue();
+//						if(element.getKey().equals("identifier.orcid")) {
+//							System.out.println("identifier.orcid");
+//						}
+//					}
+//				}
+				System.out.println(entry.getKey() + ": " + entry.getValue());
+//				System.out.println("MINHA CHAVE É: "+ entry.getKey() + " MEU VALOR É : " + entry.getValue() + "   MEU TIPO É: "+ this.tipos.get(entry.getKey()));
+			}
 		}
 	}
 	
