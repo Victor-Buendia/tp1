@@ -35,11 +35,16 @@ public class TesteCompletude {
 	// Finalizar parametrizando os testes
 	@Test
 	public void test2() {
-		String filePath = "src/teste/extratoFioCruzCorrigido.json";
-		Completude completude = JSONParser.parseJSONFile(filePath);
-		completude.imprimeCampos();
+		String filePath = "src/json/extratoFioCruzCorrigido.json";
+		Object[] testCases = JSONParser.parseJSONFile(filePath);
 		
-		System.out.println(completude);
+		for (Object test : testCases) {
+			Completude completude = new Completude((Object[][]) test);
+			completude.imprimeCampos();
+		}
+		
+		System.err.println(testCases.length);
+		
 		fail("Calculo da completude de campos OR INCLUSIVO");
 	}
 
