@@ -1,6 +1,8 @@
 package parser;
 
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,23 +14,45 @@ import completude.Completude;
 public class JSONParser {
     public static Completude parseJSONFile(String filePath) {
         try (FileReader fileReader = new FileReader(filePath)) {
-            JSONObject json = new JSONObject(fileReader);
+            StringBuilder contentBuilder = new StringBuilder();
+
+            try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = br.readLine()) != null) {
+                    contentBuilder.append(line).append("\n");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            JSONObject json = new JSONObject(contentBuilder.toString());
+            System.out.println(json.toString(4));
 
             // Parse the fields
             Map<String, Object> fields = new HashMap<>();
             for (String key : json.keySet()) {
                 Object value = json.get(key);
+                System.out.println(key);
                 if (value instanceof JSONArray) {
+                	System.out.println("sou json array");
                     JSONArray jsonArray = (JSONArray) value;
+                    System.out.println(jsonArray);
                     Object[][] subFields = new Object[jsonArray.length()][];
                     for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONArray subArray = jsonArray.getJSONArray(i);
-                        Object[] subField = new Object[subArray.length()];
-                        for (int j = 0; j < subArray.length(); j++) {
-                            subField[j] = subArray.get(j);
+                        Object subValue = jsonArray.get(i);
+                        if (subValue instanceof JSONArray) {
+                            JSONArray subArray = (JSONArray) subValue;
+                            Object[] subField = new Object[subArray.length()];
+                            for (int j = 0; j < subArray.length(); j++) {
+                                subField[j] = subArray.get(j);
+                            }
+                            subFields[i] = subField;
+                        } else {
+                            // Handle the case where the element is not an array
+                            // You can choose to ignore it, throw an exception, or handle it differently
                         }
-                        subFields[i] = subField;
                     }
+                    System.out.println(subFields);
                     fields.put(key, new Completude(subFields));
                 } else {
                     fields.put(key, value);
