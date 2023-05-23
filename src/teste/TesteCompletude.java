@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import completude.Completude;
+import parser.JSONParser;
 
 public class TesteCompletude {
 	
@@ -26,7 +27,7 @@ public class TesteCompletude {
 			}
 		);
 		
-		pessoaFisica.imprimeCampos();
+//		pessoaFisica.imprimeCampos();
 	}
 	
 	// Calculo da completude de campos OR INCLUSIVO
@@ -34,6 +35,11 @@ public class TesteCompletude {
 	// Finalizar parametrizando os testes
 	@Test
 	public void test2() {
+		String filePath = "src/teste/extratoFioCruzCorrigido.json";
+		Completude completude = JSONParser.parseJSONFile(filePath);
+		completude.imprimeCampos();
+		
+		System.out.println(completude);
 		fail("Calculo da completude de campos OR INCLUSIVO");
 	}
 
