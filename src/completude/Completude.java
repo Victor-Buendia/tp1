@@ -114,6 +114,14 @@ public class Completude {
 		return resultado;
 	}
 	
+	public boolean checarCompletudeMultiCampos() {
+		boolean inclusivo = false, exclusivo = false;
+		inclusivo = inclusivo || checarCompletudeOrInclusivo(this);
+		exclusivo = exclusivo ^ checarCompletudeOrExclusivo(this);
+		
+		return inclusivo || exclusivo;
+	}
+	
 	// método para cálculo de registro multi-campos
 	public double calcularCompletudeMultiCampos() {
 		return calcularCompletudeMultiCampos(this) * 100;
@@ -135,15 +143,13 @@ public class Completude {
 				Completude subcampo = (Completude) value;
 				
 				retorno = calcularCompletudeMultiCampos(subcampo);
-//				exclusivo = exclusivo ^ checarCompletudeOrExclusivo(subcampo);
-//				inclusivo = inclusivo || checarCompletudeOrInclusivo(subcampo);
 				
 				if(key.equals("authors")) {
 					preenchimento += (retorno /= (subcampo.campos.size()));
 					camposContados++;
 				}
 				else preenchimento += retorno;
-				
+				continue;
 				
 			} else if(tipo != null) {
 				if(pai == null && tipo.equals("atomico")) {
@@ -151,10 +157,12 @@ public class Completude {
 					if(checarCampoAtomico(value)) preenchimento++;
 				}
 				else if(tipo.equals("inclusivo") && isNumeric(pai) && value != null) {
-					inclusivo = true; orfao = false;
+					inclusivo = true; 
+					orfao = false;
 				}
 				else if(tipo.equals("exclusivo") && isNumeric(pai)) {
-					exclusivo = exclusivo ^ checarCampoAtomico(value); orfao = false;
+					exclusivo = exclusivo ^ checarCampoAtomico(value); 
+					orfao = false;
 				}
 			} else if(pai != null && isNumeric(pai)) {
 				orfao = false;
@@ -167,23 +175,6 @@ public class Completude {
 		
 		return ((camposContados == 0) ? preenchimento : ((double)preenchimento/camposContados));
 	}
-	
-	
-//	public double calcularCompletudeMultiCampos() {
-//		int totalCampos = campos.size();
-//		int camposPreenchidos = contarCamposPreenchidos();
-//		return ((double) camposPreenchidos / totalCampos) * 100;
-//	}
-	
-//	private int contarCamposPreenchidos() {
-//		int camposPreenchidos = 0;
-//		for (Object valor : campos.values()) {
-//			if (valor != null) {
-//				camposPreenchidos++;
-//			}
-//		}
-//		return camposPreenchidos;
-//	}
 
 	public static boolean isNumeric(String str) { 
 		  try {  

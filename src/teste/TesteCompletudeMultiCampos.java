@@ -2,6 +2,7 @@ package teste;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import completude.Completude;
@@ -16,6 +17,9 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class TesteCompletudeMultiCampos {
+	
+	Completude c;
+	
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
@@ -54,10 +58,10 @@ public class TesteCompletudeMultiCampos {
                 }}
             }, false },
             { new Object[][] {
-                {"CPF", null, "inclusivo"},
-                {"Matrícula", null, "inclusivo"},
+                {"CPF", null, "exclusivo"},
+                {"Matrícula", null, "exclusivo"},
                 {"Sexo", "Masculino", "inclusivo"},
-                {"Email", null, "inclusivo"},
+                {"Email", "victor@gmail.com", "exclusivo"},
                 {"Nome", new Object[][] {
                     {"PrimeiroNome", null, "inclusivo"},
                     {"NomeMeio", null, "inclusivo"},
@@ -74,7 +78,14 @@ public class TesteCompletudeMultiCampos {
                     {"NomeMeio", null, "inclusivo"},
                     {"UltimoNome", null, "inclusivo"}
                 }}
-            }, true }
+            }, true },
+            { new Object[][] {
+                {"CPF", "111.111.111-10", "exclusivo"},
+                {"Matricula", null, "exclusivo"},
+                {"Sexo", "M", "inclusivo"},
+                {"Email", "nelsinho@unb.br", "inclusivo"}
+            }, true },
+            
         });
     }
     
@@ -86,9 +97,13 @@ public class TesteCompletudeMultiCampos {
         this.resultadoEsperado = resultadoEsperado;
     }
     
+    @Before
+    public void setup() {
+    	c = new Completude(dados);
+    }
+    
     @Test
-    public void testCompletudeOrInclusivo() {
-        Completude c = new Completude(dados);
-        assertEquals(resultadoEsperado, c.checarCompletudeOrInclusivo());
+    public void testCompletudeMultiCampos() {
+        assertEquals(resultadoEsperado, c.checarCompletudeMultiCampos());
     }
 }
