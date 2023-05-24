@@ -10,46 +10,11 @@ public class TesteCompletude {
 	
 	Completude pessoaFisica;
 	
-	@Test
-	public void testCriacaoCampos() {
-		pessoaFisica = new Completude(
-			new Object[][] {
-				{"CPF", null},
-				{"Matrícula", null},
-				{"Sexo", "M"},
-				{"Email", null},
-				{"Nome", new Object[][] {
-					{"PrimeiroNome", "Victor"},
-					{"NomeMeio", null},
-					{"UltimoNome", null}
-				}}
-			}
-		);
-		
-		pessoaFisica.imprimeCampos();
-	}
-	
-	// Calculo da completude de campos OR INCLUSIVO
-	// Fazer a falsificação, duplicação e triangulação
-	// Finalizar parametrizando os testes
-	@Test
-	public void test2() {
-		fail("Calculo da completude de campos OR INCLUSIVO");
-	}
-
-	// Cálculo da completude de registros multi-campos
-	// Fazer a falsificação, duplicação e triangulação
-	// Finalizar parametrizando os testes
-	@Test
-	public void test3() {
-		fail("Cálculo da completude de registros multi-campos");
-	}
-
 	// Testes de exceção
 	// Não são parametrizados
 	@Test
     public void testCompletude_CamposNulos() {
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(NullPointerException.class, () -> {
             pessoaFisica = new Completude(null);
         });
     }
@@ -78,7 +43,7 @@ public class TesteCompletude {
                 {"Nome", new Object[][] {
                     {"PrimeiroNome", "Nelso"},
                     {"NomeMeio", null},
-                    {"UltimoNome", "Lanna"}
+                    {null, "Lanna"}
                 }}
             });
         });

@@ -2,6 +2,7 @@ package teste;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import completude.Completude;
@@ -16,65 +17,75 @@ import org.junit.runners.Parameterized.Parameters;
 
 @RunWith(Parameterized.class)
 public class TesteCompletudeMultiCampos {
+	
+	Completude c;
+	
     @Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][] {
             { new Object[][] {
-                {"PrimeiroNome", "Nelso"},
-                {"NomeMeio", null},
-                {"UltimoNome", null}
+                {"PrimeiroNome", "Nelso", "inclusivo"},
+                {"NomeMeio", null, "inclusivo"},
+                {"UltimoNome", null, "inclusivo"}
             }, true },
             { new Object[][] {
-                {"CPF", null},
-                {"Matricula", "23/01234956"},
-                {"Sexo", "M"},
-                {"Email", null}
+                {"CPF", null, "inclusivo"},
+                {"Matricula", "23/01234956", "inclusivo"},
+                {"Sexo", "M", "inclusivo"},
+                {"Email", null, "inclusivo"}
             }, true },
             { new Object[][] {
-                {"CPF", "111.111.111-10"},
-                {"Matricula", "23/01234956"},
-                {"Sexo", "M"},
-                {"Email", "nelsinho@unb.br"}
+                {"CPF", "111.111.111-10", "inclusivo"},
+                {"Matricula", "23/01234956", "inclusivo"},
+                {"Sexo", "M", "inclusivo"},
+                {"Email", "nelsinho@unb.br", "inclusivo"}
             }, true },
             { new Object[][] {
-                {"CPF", null},
-                {"Matricula", null},
-                {"Sexo", null},
-                {"Email", null}
+                {"CPF", null, "inclusivo"},
+                {"Matricula", null, "inclusivo"},
+                {"Sexo", null, "inclusivo"},
+                {"Email", null, "inclusivo"}
             }, false },
             { new Object[][] {
-                {"CPF", null},
-                {"Matrícula", null},
-                {"Sexo", null},
-                {"Email", null},
+                {"CPF", null, "inclusivo"},
+                {"Matrícula", null, "inclusivo"},
+                {"Sexo", null, "inclusivo"},
+                {"Email", null, "inclusivo"},
                 {"Nome", new Object[][] {
-                    {"PrimeiroNome", null},
-                    {"NomeMeio", null},
-                    {"UltimoNome", null}
+                    {"PrimeiroNome", null, "inclusivo"},
+                    {"NomeMeio", null, "inclusivo"},
+                    {"UltimoNome", null, "inclusivo"}
                 }}
             }, false },
             { new Object[][] {
-                {"CPF", null},
-                {"Matrícula", null},
-                {"Sexo", "Masculino"},
-                {"Email", null},
+                {"CPF", null, "exclusivo"},
+                {"Matrícula", null, "exclusivo"},
+                {"Sexo", "Masculino", "inclusivo"},
+                {"Email", "victor@gmail.com", "exclusivo"},
                 {"Nome", new Object[][] {
-                    {"PrimeiroNome", null},
-                    {"NomeMeio", null},
-                    {"UltimoNome", null}
+                    {"PrimeiroNome", null, "inclusivo"},
+                    {"NomeMeio", null, "inclusivo"},
+                    {"UltimoNome", null, "inclusivo"}
                 }}
             }, true },
             { new Object[][] {
-                {"CPF", null},
-                {"Matrícula", null},
-                {"Sexo", null},
-                {"Email", null},
+                {"CPF", null, "inclusivo"},
+                {"Matrícula", null, "inclusivo"},
+                {"Sexo", null, "inclusivo"},
+                {"Email", null, "inclusivo"},
                 {"Nome", new Object[][] {
-                    {"PrimeiroNome", "Ana"},
-                    {"NomeMeio", null},
-                    {"UltimoNome", null}
+                    {"PrimeiroNome", "Ana", "inclusivo"},
+                    {"NomeMeio", null, "inclusivo"},
+                    {"UltimoNome", null, "inclusivo"}
                 }}
-            }, true }
+            }, true },
+            { new Object[][] {
+                {"CPF", "111.111.111-10", "exclusivo"},
+                {"Matricula", null, "exclusivo"},
+                {"Sexo", "M", "inclusivo"},
+                {"Email", "nelsinho@unb.br", "inclusivo"}
+            }, true },
+            
         });
     }
     
@@ -86,9 +97,13 @@ public class TesteCompletudeMultiCampos {
         this.resultadoEsperado = resultadoEsperado;
     }
     
+    @Before
+    public void setup() {
+    	c = new Completude(dados);
+    }
+    
     @Test
-    public void testCompletudeOrInclusivo() {
-        Completude c = new Completude(dados);
-        assertEquals(resultadoEsperado, c.checarCompletudeOrInclusivo());
+    public void testCompletudeMultiCampos() {
+        assertEquals(resultadoEsperado, c.checarCompletudeMultiCampos());
     }
 }
