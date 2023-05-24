@@ -72,13 +72,17 @@ public class Completude {
 		
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
+			Object key = entry.getKey();
 			
 			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
 				resultado = resultado ^ checarCompletudeOrExclusivo(subcampo);
 			}
-			else 
-				resultado = resultado ^ checarCampoAtomico(value);
+			else {
+				if(camposAninhados.tipos.get(key) != null && camposAninhados.tipos.get(key).equals("exclusivo")) {
+					resultado = resultado ^ checarCampoAtomico(value);
+				}
+			}
 		}
 		
 		return resultado;
@@ -94,13 +98,16 @@ public class Completude {
 		
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
+			Object key = entry.getKey();
 			
 			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
 				resultado = resultado || checarCompletudeOrInclusivo(subcampo);
 			}
 			else if(checarCampoAtomico(value)) {
-				resultado = true;
+				if(camposAninhados.tipos.get(key) != null && camposAninhados.tipos.get(key).equals("inclusivo")) {
+					resultado = true;
+				}
 			}
 		}
 		
@@ -128,6 +135,8 @@ public class Completude {
 				Completude subcampo = (Completude) value;
 				
 				retorno = calcularCompletudeMultiCampos(subcampo);
+//				exclusivo = exclusivo ^ checarCompletudeOrExclusivo(subcampo);
+//				inclusivo = inclusivo || checarCompletudeOrInclusivo(subcampo);
 				
 				if(key.equals("authors")) {
 					preenchimento += (retorno /= (subcampo.campos.size()));

@@ -35,43 +35,43 @@ public class TesteCompletudeOrExclusivo {
 			
 			// testOrExclusivoVerdadeiro
 			{new Object[][] {
-				{"Rua", null},
-				{"Cidade", null},
-				{"Estado", "Distrito Federal"},
-				{"CEP", null}
+				{"Rua", null, "exclusivo"},
+				{"Cidade", null, "exclusivo"},
+				{"Estado", "Distrito Federal", "exclusivo"},
+				{"CEP", null, "exclusivo"}
 			}, true},
 			
 			// testOrExclusivoFalso
 			{new Object[][] {
-				{"Rua", null},
-				{"Cidade", "Brasília"},
-				{"Estado", "Distrito Federal"},
+				{"Rua", null, "exclusivo"},
+				{"Cidade", "Brasília", "exclusivo"},
+				{"Estado", "Distrito Federal", "exclusivo"},
 				{"CEP", null}
 			}, false},
 			
 			//testOrExclusivoAninhadoVerdadeiro
 			{new Object[][] {
-				{"CPF", null},
-				{"Matrícula", null},
-				{"Sexo", "M"},
-				{"Email", null},
+				{"CPF", null, "exclusivo"},
+				{"Matrícula", null, "exclusivo"},
+				{"Sexo", "M", "exclusivo"},
+				{"Email", null, "exclusivo"},
 				{"Nome", new Object[][] {
-					{"PrimeiroNome", null},
-					{"NomeMeio", null},
-					{"UltimoNome", null}
+					{"PrimeiroNome", null, "exclusivo"},
+					{"NomeMeio", null, "exclusivo"},
+					{"UltimoNome", null, "exclusivo"}
 				}}
 			}, true},
 			
 			//testOrExclusivoAninhadoFalso
 			{new Object[][] {
-				{"CPF", null},
-				{"Matrícula", null},
-				{"Sexo", "M"},
-				{"Email", null},
+				{"CPF", null, "exclusivo"},
+				{"Matrícula", null, "exclusivo"},
+				{"Sexo", "M", "exclusivo"},
+				{"Email", null, "exclusivo"},
 				{"Nome", new Object[][] {
-					{"PrimeiroNome", "Victor"},
-					{"NomeMeio", null},
-					{"UltimoNome", null}
+					{"PrimeiroNome", "Victor", "exclusivo"},
+					{"NomeMeio", null, "exclusivo"},
+					{"UltimoNome", null, "exclusivo"}
 				}}
 			}, false},
 		};
