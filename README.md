@@ -64,9 +64,9 @@ O programa consiste nas seguintes classes:
 
 ### 2.4. Configuração de ambiente
 
-Neste trabalho utilizamos o pacote JSON-Java que é uma implementação de referência que demonstra como analisar documentos JSON em objetos Java e como gerar novos documentos JSON a partir das classes Java. O pacote se encontra na pasta org_json [Link for download](https://github.com/Victor-Buendia/tp1/tree/main/org_json).
+Neste trabalho utilizamos o pacote JSON-Java que é uma implementação de referência que demonstra como analisar documentos JSON em objetos Java e também como gerar novos documentos JSON a partir das classes Java. O JAR para ser utilizado no **ClassPath** se encontra na [pasta json deste repositório](https://github.com/Victor-Buendia/tp1/tree/main/org_json). Caso tenha algum problema, basta baixar o JAR através do Maeven [clicando aqui](https://mvnrepository.com/artifact/org.json/json/20230227).
 
-Você deve baixar o pacote e configurar o ClassPath no eclipse. Você receberá o seguinte erro:
+Você deve, após clonar o repositório, configurar o ClassPath no Eclipse para usar o [JAR](https://github.com/Victor-Buendia/tp1/blob/main/org_json/json-20230227.jar). Com o projeto desconfigurado, você receberá o seguinte erro:
 
 ![Testes](https://github.com/Victor-Buendia/tp1/blob/main/asset/erro_json.JPG)
 
