@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.Arrays;
 import java.util.Collection;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized.Parameters;
@@ -15,6 +16,8 @@ import org.junit.runners.Parameterized;
 
 @RunWith(Parameterized.class)
 public class TesteCompletudeOrInclusivo {
+	
+	Completude c;
 	
 	@Parameters
 	public static Collection<Object[]> data() {
@@ -87,9 +90,14 @@ public class TesteCompletudeOrInclusivo {
 		this.resultadoEsperado = resultadoEsperado;
 	}
 	
+	@Before
+	public void setup() {
+		c = new Completude(dados);
+	}
+
+	
 	@Test
 	public void testCompletudeOrInclusivo() {
-		Completude c = new Completude(dados);
 		assertEquals(resultadoEsperado, c.checarCompletudeOrInclusivo());
 	}
 }

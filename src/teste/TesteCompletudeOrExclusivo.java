@@ -85,6 +85,6 @@ public class TesteCompletudeOrExclusivo {
 
 	@Test
 	public void testeOrExclusivo() {
-		assertEquals(completude.checarCompletude(), resultado);
+		assertEquals(completude.checarCompletudeOrExclusivo(), resultado);
 	}
 }

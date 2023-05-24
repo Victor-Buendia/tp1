@@ -1,6 +1,5 @@
 package completude;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,11 +9,13 @@ public class Completude {
 	private Map<String, Object> tipos = new HashMap<>();
 	private Map<String, Object> pai = new HashMap<>();
 	
-	public Completude(Object[][] campos) {
+	public Completude(Object[][] campos) throws IllegalArgumentException {
 		for(Object[] campo : campos) {
 			String chave = (String) campo[0];
 			Object valor = campo[1];
 			String tipo = (campo.length > 2) ? ((String) campo[2]) : null;
+			
+			if(chave == null) throw new IllegalArgumentException();
 			
 			if(valor instanceof Object[][]) {
 				Object[][] subcampo = (Object[][]) valor;
@@ -62,11 +63,11 @@ public class Completude {
 	}
 	
 	// método para verificar se um campo composto está completo (recursivo)
-	public boolean checarCompletude() {
-		return checarCompletude(this);
+	public boolean checarCompletudeOrExclusivo() {
+		return checarCompletudeOrExclusivo(this);
 	}
 	
-	public boolean checarCompletude(Completude camposAninhados) {
+	public boolean checarCompletudeOrExclusivo(Completude camposAninhados) {
 		boolean resultado = false;
 		
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
@@ -74,7 +75,7 @@ public class Completude {
 			
 			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
-				resultado = resultado ^ checarCompletude(subcampo);
+				resultado = resultado ^ checarCompletudeOrExclusivo(subcampo);
 			}
 			else 
 				resultado = resultado ^ checarCampoAtomico(value);
@@ -85,26 +86,25 @@ public class Completude {
 
 	// método para verificar se um campo é orinclusivo (recursivo)
 	public boolean checarCompletudeOrInclusivo() {
-		return checarCompletude(this);
+		return checarCompletudeOrInclusivo(this);
 	}
 	
 	public boolean checarCompletudeOrInclusivo(Completude camposAninhados) {
+		boolean resultado = false;
 		
 		for (Map.Entry<String, Object> entry : camposAninhados.campos.entrySet()) {
 			Object value = entry.getValue();
-
+			
 			if(value instanceof Completude) {
 				Completude subcampo = (Completude) value;
-				if(checarCompletudeOrInclusivo(subcampo)) {
-					return true;
-				}
+				resultado = resultado || checarCompletudeOrInclusivo(subcampo);
 			}
 			else if(checarCampoAtomico(value)) {
-				return true;
+				resultado = true;
 			}
 		}
 		
-		return false;
+		return resultado;
 	}
 	
 	// método para cálculo de registro multi-campos
@@ -128,11 +128,9 @@ public class Completude {
 				Completude subcampo = (Completude) value;
 				
 				retorno = calcularCompletudeMultiCampos(subcampo);
-//				System.out.println("RETORNOOOOOOO " + retorno);
 				
 				if(key.equals("authors")) {
 					preenchimento += (retorno /= (subcampo.campos.size()));
-//					System.out.println(" O ESPERADOOOOOO " + (retorno /= (subcampo.campos.size())));
 					camposContados++;
 				}
 				else preenchimento += retorno;
@@ -141,16 +139,13 @@ public class Completude {
 			} else if(tipo != null) {
 				if(pai == null && tipo.equals("atomico")) {
 					camposContados++;
-//					System.out.println("oasoddsoaso");
 					if(checarCampoAtomico(value)) preenchimento++;
 				}
 				else if(tipo.equals("inclusivo") && isNumeric(pai) && value != null) {
 					inclusivo = true; orfao = false;
-//					System.out.println("EUEUUEUEUEUEU");
 				}
 				else if(tipo.equals("exclusivo") && isNumeric(pai)) {
 					exclusivo = exclusivo ^ checarCampoAtomico(value); orfao = false;
-//					System.out.println("DSAKSDKSAKDSKAKD");
 				}
 			} else if(pai != null && isNumeric(pai)) {
 				orfao = false;
@@ -160,16 +155,8 @@ public class Completude {
 		if(!orfao) camposContados+=2;
 		if(inclusivo) {preenchimento++;}
 		if(exclusivo) {preenchimento++;}
-//		System.out.println(camposAninhados + "--" + ((camposContados == 0) ? 0 : ((double)preenchimento/camposContados)));
-//		for(Map.Entry<String, Object> campo : camposAninhados.campos.entrySet()) {
-//			if(camposAninhados.tipos.get(campo.getKey()) != null) {
-//				System.out.println(campo.getKey() + ": " + campo.getValue());
-//			}
-//		}
-//		System.out.println("\n\n");
-//		System.out.println("preeeeee: " + preenchimento + "  ===== contados: " + camposContados);
+		
 		return ((camposContados == 0) ? preenchimento : ((double)preenchimento/camposContados));
-		//(camposContados == 0) ? 0 : (preenchimento/camposContados)
 	}
 	
 	
@@ -179,15 +166,15 @@ public class Completude {
 //		return ((double) camposPreenchidos / totalCampos) * 100;
 //	}
 	
-	private int contarCamposPreenchidos() {
-		int camposPreenchidos = 0;
-		for (Object valor : campos.values()) {
-			if (valor != null) {
-				camposPreenchidos++;
-			}
-		}
-		return camposPreenchidos;
-	}
+//	private int contarCamposPreenchidos() {
+//		int camposPreenchidos = 0;
+//		for (Object valor : campos.values()) {
+//			if (valor != null) {
+//				camposPreenchidos++;
+//			}
+//		}
+//		return camposPreenchidos;
+//	}
 
 	public static boolean isNumeric(String str) { 
 		  try {  

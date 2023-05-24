@@ -27,6 +27,11 @@ public class TesteCompletudeFioCruz {
             { testCases[1], 79.16 },
             { testCases[2], 80.00 },
             { testCases[3], 78.12 },
+            { testCases[4], 78.57 },
+            { testCases[5], 81.25 },
+            { testCases[6], 79.16 },
+            { testCases[7], 75.96 },
+            { testCases[8], 75.73 },
             { testCases[9], 76.25 },
         });
     }
@@ -42,7 +47,6 @@ public class TesteCompletudeFioCruz {
     @Test
     public void testCompletudeMultiCamposFioCruz() {
         Completude c = new Completude(camposAninhados);
-//        c.imprimeCampos();
         assertEquals(resultadoEsperado, c.calcularCompletudeMultiCampos(), 0.1);
     }
 }
