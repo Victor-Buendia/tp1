@@ -24,8 +24,10 @@ public class TesteCompletudeFioCruz {
     	
         return Arrays.asList(new Object[][] {
             { testCases[0], 79.68 },
-//            { testCases[1], 79.16 },
-//            { testCases[9], 79.16 },
+            { testCases[1], 79.16 },
+            { testCases[2], 80.00 },
+            { testCases[3], 78.12 },
+            { testCases[9], 76.25 },
         });
     }
     

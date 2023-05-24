@@ -114,7 +114,7 @@ public class Completude {
 	public double calcularCompletudeMultiCampos(Completude camposAninhados) {
 		double preenchimento = 0.0;
 		boolean inclusivo = false, exclusivo = false, orfao = true;
-		double camposContados = 0.0;
+		int camposContados = 0;
 		double retorno = 0;
 		
 		for(Map.Entry<String, Object> campo : camposAninhados.campos.entrySet()) {
@@ -126,46 +126,49 @@ public class Completude {
 			
 			if(value instanceof Completude && !key.equals("PublisherJournal")) {
 				Completude subcampo = (Completude) value;
-				System.out.println("PREENCHI ANTES " + preenchimento);
-				preenchimento += calcularCompletudeMultiCampos(subcampo);
-				System.out.println("RETORNOOOOOOO " + preenchimento);
+				
+				retorno = calcularCompletudeMultiCampos(subcampo);
+//				System.out.println("RETORNOOOOOOO " + retorno);
+				
 				if(key.equals("authors")) {
-					preenchimento += (preenchimento /= (subcampo.campos.size()));
-					camposContados+=1.0;
+					preenchimento += (retorno /= (subcampo.campos.size()));
+//					System.out.println(" O ESPERADOOOOOO " + (retorno /= (subcampo.campos.size())));
+					camposContados++;
 				}
+				else preenchimento += retorno;
 				
 				
 			} else if(tipo != null) {
 				if(pai == null && tipo.equals("atomico")) {
-					camposContados+=1.0;
-					System.out.println("oasoddsoaso");
+					camposContados++;
+//					System.out.println("oasoddsoaso");
 					if(checarCampoAtomico(value)) preenchimento++;
 				}
 				else if(tipo.equals("inclusivo") && isNumeric(pai) && value != null) {
 					inclusivo = true; orfao = false;
-					System.out.println("EUEUUEUEUEUEU");
+//					System.out.println("EUEUUEUEUEUEU");
 				}
 				else if(tipo.equals("exclusivo") && isNumeric(pai)) {
 					exclusivo = exclusivo ^ checarCampoAtomico(value); orfao = false;
-					System.out.println("DSAKSDKSAKDSKAKD");
+//					System.out.println("DSAKSDKSAKDSKAKD");
 				}
 			} else if(pai != null && isNumeric(pai)) {
 				orfao = false;
 			}
 		}
 		
-		if(!orfao) camposContados+=2.0;
-		if(inclusivo) {preenchimento+=1.0;}
-		if(exclusivo) {preenchimento+=1.0;}
-		System.out.println(camposAninhados + "--" + ((camposContados == 0.0) ? 0.0 : ((float)preenchimento/camposContados)));
-		for(Map.Entry<String, Object> campo : camposAninhados.campos.entrySet()) {
-			if(camposAninhados.tipos.get(campo.getKey()) != null) {
-				System.out.println(campo.getKey() + ": " + campo.getValue());
-			}
-		}
-		System.out.println("\n\n");
-		System.out.println("preeeeee: " + preenchimento + "  ===== contados: " + camposContados);
-		return ((camposContados == 0.0) ? 0.0 : ((double)preenchimento/camposContados*500));
+		if(!orfao) camposContados+=2;
+		if(inclusivo) {preenchimento++;}
+		if(exclusivo) {preenchimento++;}
+//		System.out.println(camposAninhados + "--" + ((camposContados == 0) ? 0 : ((double)preenchimento/camposContados)));
+//		for(Map.Entry<String, Object> campo : camposAninhados.campos.entrySet()) {
+//			if(camposAninhados.tipos.get(campo.getKey()) != null) {
+//				System.out.println(campo.getKey() + ": " + campo.getValue());
+//			}
+//		}
+//		System.out.println("\n\n");
+//		System.out.println("preeeeee: " + preenchimento + "  ===== contados: " + camposContados);
+		return ((camposContados == 0) ? preenchimento : ((double)preenchimento/camposContados));
 		//(camposContados == 0) ? 0 : (preenchimento/camposContados)
 	}
 	
