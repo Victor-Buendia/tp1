@@ -64,7 +64,7 @@ O programa consiste nas seguintes classes:
 
 ### 2.4. Configuração de ambiente
 
-Neste trabalho utilizamos o pacote JSON-Java é uma implementação de referência que demonstra como analisar documentos JSON em objetos Java e como gerar novos documentos JSON a partir das classes Java. [Link for download](https://github.com/stleary/JSON-java).
+Neste trabalho utilizamos o pacote JSON-Java que é uma implementação de referência que demonstra como analisar documentos JSON em objetos Java e como gerar novos documentos JSON a partir das classes Java. O pacote se encontra na pasta org_json [Link for download](https://github.com/Victor-Buendia/tp1/tree/main/org_json).
 
 Você deve baixar o pacote e configurar o ClassPath no eclipse. Você receberá o seguinte erro:
 
