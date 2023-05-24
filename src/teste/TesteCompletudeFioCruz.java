@@ -24,6 +24,8 @@ public class TesteCompletudeFioCruz {
     	
         return Arrays.asList(new Object[][] {
             { testCases[0], 79.68 },
+//            { testCases[1], 79.16 },
+//            { testCases[9], 79.16 },
         });
     }
     
@@ -36,9 +38,9 @@ public class TesteCompletudeFioCruz {
     }
     
     @Test
-    public void testCompletudeOrInclusivo() {
+    public void testCompletudeMultiCamposFioCruz() {
         Completude c = new Completude(camposAninhados);
-        c.imprimeCampos();
+//        c.imprimeCampos();
         assertEquals(resultadoEsperado, c.calcularCompletudeMultiCampos(), 0.1);
     }
 }
