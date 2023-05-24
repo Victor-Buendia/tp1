@@ -59,7 +59,7 @@ O programa consiste nas seguintes classes:
 
 ### 2.3. Rodando os testes
 
-![Testes](.\asset\testes.JPG)
+![Testes](https://github.com/Victor-Buendia/tp1/blob/main/asset/testes.JPG)
 
 
 ### 2.4. Configuração de ambiente
@@ -68,8 +68,8 @@ Neste trabalho utilizamos o pacote JSON-Java é uma implementação de referênc
 
 Você deve baixar o pacote e configurar o ClassPath no eclipse. Você receberá o seguinte erro:
 
-![Testes](.\asset\erro_json.JPG)
+![Testes](https://github.com/Victor-Buendia/tp1/blob/main/asset/erro_json.JPG)
 
 Basta baixar o pacote e editar o caminho do arquivo, conforme abaixo:
 
-![Testes](.\asset\erro_json_corrigido.JPG)
+![Testes](https://github.com/Victor-Buendia/tp1/blob/main/asset/erro_json_corrigido.JPG)
