@@ -14,7 +14,7 @@ Trabalho 1 da disciplina TPPE no semestre 2023/1.
 
 ## 2. Escopo do trabalho
 
-O trabalho apresenta o emprego das três técnicas de TDD - Test-Driven Development(falsificação, duplicação e triangulação) em, pelo menos, nas três seguintes situações:
+O trabalho apresenta o emprego das três técnicas de TDD - Test-Driven Development (falsificação, duplicação e triangulação) em, pelo menos, nas três seguintes situações:
 
 - Calculo da completude de campos OR EXCLUSIVO;
 - Cálculo da completude de registros multi-campos.
@@ -42,6 +42,8 @@ Campos aninhados OR inclusivo:
 - `author.birthCity`
 - `author.birthState`
 
+Os outros campos do arquivo json que não estão listados são ignorados no teste de completude.
+
 ### 2.2. Componentes
 
 O programa consiste nas seguintes classes:
@@ -56,3 +58,18 @@ O programa consiste nas seguintes classes:
 
 
 ### 2.3. Rodando os testes
+
+![Testes](.\asset\testes.JPG)
+
+
+### 2.4. Configuração de ambiente
+
+Neste trabalho utilizamos o pacote JSON-Java é uma implementação de referência que demonstra como analisar documentos JSON em objetos Java e como gerar novos documentos JSON a partir das classes Java. [Link for download](https://github.com/stleary/JSON-java).
+
+Você deve baixar o pacote e configurar o ClassPath no eclipse. Você receberá o seguinte erro:
+
+![Testes](.\asset\erro_json.JPG)
+
+Basta baixar o pacote e editar o caminho do arquivo, conforme abaixo:
+
+![Testes](.\asset\erro_json_corrigido.JPG)
